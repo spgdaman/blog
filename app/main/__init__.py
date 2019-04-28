@@ -1,3 +1,4 @@
+# main's __init__.py file
 from flask import Blueprint
 
 main = Blueprint('main',__name__)
