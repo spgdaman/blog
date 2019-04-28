@@ -17,6 +17,7 @@ def signup():
     form = SignupForm()
 
     if form.validate_on_submit():
+        
         return redirect(url_for('auth.login'))
 
     return render_template('signup.html', form=form)
