@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username =db.Column(db.String(40), unique=True, index=True)
-    email = db.Column(db.Dtring(255), unique=True, index=True)
+    email = db.Column(db.String(255), unique=True, index=True)
     pass_hash = db.Column(db.String(255))
 
     posts = db.relationship('Post',backref='user',lazy='dynamic')
@@ -55,4 +55,3 @@ class Comment(db.Model):
     comment_content = db.Column(db.String())
     post_id = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    
