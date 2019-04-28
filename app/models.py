@@ -1,4 +1,6 @@
 from . import db
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 
 class Quotes:
 
@@ -11,11 +13,46 @@ class Quotes:
 
 
 
-class Users:
+class User(db.Model, UserMixin):
     
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
     username =db.Column(db.String(40), unique=True, index=True)
     email = db.Column(db.Dtring(255), unique=True, index=True)
-    pass_hash = db.Column()
+    pass_hash = db.Column(db.String(255))
+
+    posts = db.relationship('Post',backref='user',lazy='dynamic')
+    comments = db.relationship('Comment', backref='user', lazy='dynamic')
+
+    @property
+    def password(self):
+        raise AttributeError("You cannot read password attribute")
+
+    def set_password(self, password):
+        self.hash_pass = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.hash_pass, password)
+
+    def __repr__(self):
+        return f"User {self.username}"
+
+class Post(db.Model):
+
+    __tablename__ = 'posts'
+
+    id = db.Column(db.Integer, primary_key=True)
+    post_content = db.Column(db.String())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    post_date = db.Column(db.DateTime)
+
+class Comment(db.Model):
+
+    __tablename__ = 'comments'
+
+    id = db.Column(db.Integer, primary_key=True)
+    comment_content = db.Column(db.String())
+    post_id = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    
