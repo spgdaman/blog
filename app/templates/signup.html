@@ -1,19 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form method="POST">
-        {{form.hidden_tag()}}
-        {{form.firstname.label}}{{form.firstname()}}
-        <br>
-        {{form.lastname.label}}{{form.lastname}}
-        <br>
-        {{form.email.label}}{{form.email()}}
-        <br>
-        {{form.password.label}}{{form.password()}}
-        <br>
-        {{form.pass_confirm.label}}{{form.pass_confirm()}}
-        <br>
-        {{form.signup.label}}{{form.signup()}}
-    </form>
+
+
+    <div class="container">
+        <center>
+            <form method="POST">
+                
+                {{form.hidden_tag()}}
+
+                <div class="form-group">
+                    <label for="firstname">{{form.firstname.label}}</label>
+                    {{form.firstname()}}
+                </div>
+        
+                <div class="form-group">
+                    <label for="lastname">{{form.lastname.label}}</label>
+                    {{form.lastname}}
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">{{form.email.label}}</label>
+                    {{form.email()}}
+                </div>
+
+                <div class="form-group">
+                    <label for="password">{{form.password.label}}</label>
+                    {{form.password()}}
+                </div>         
+       
+                
+                <div class="form-group">
+                    <label for="pass_confirm">{{form.pass_confirm.label}}</label>
+                    {{form.pass_confirm()}}
+                </div>
+
+                <button class="btn btn-lg btn-primary">{{form.submit()}}</button>
+            </form>
+        </center>   
+    </div>
 
 {% endblock%}
