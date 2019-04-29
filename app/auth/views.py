@@ -14,4 +14,4 @@ def login():
             login_user(user)
             return redirect(request.args.get('next') or url_for('main.index'))
         
-    return render_template('auth/login.html')
+    return render_template('auth/login.html',login_form=login_form)

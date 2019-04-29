@@ -9,7 +9,6 @@ def load_user(user_id):
 
 class Quotes:
 
-
     def __init__(self,author,id,quote,permalink):
         self.author = author
         self.id = id
@@ -41,7 +40,7 @@ class User(db.Model, UserMixin):
         self.pass_hash = generate_password_hash(password)
 
     def check_password(self, password):
-        return check_password_hash(self.hash_pass, password)
+        return check_password_hash(self.pass_hash, password)
 
     def __repr__(self):
         return f"User {self.username}"
