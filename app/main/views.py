@@ -4,7 +4,8 @@ from . import main
 from .forms import SignupForm, NewpostForm
 from ..models import User,Post
 from .. import db
-import datetime 
+import datetime
+from flask_login import login_required
 
 @main.route('/')
 def index():
@@ -36,6 +37,7 @@ def show_all_posts():
     return render_template('allposts.html', all_posts=all_posts)
 
 @main.route('/add/new_post', methods=["GET","POST"])
+@login_required
 def add_new():
     newpost_form = NewpostForm()
     timestamp = datetime.datetime.now().strftime("%d-%m-%y %H:%M")
@@ -57,6 +59,7 @@ def get_post(post_id):
     return render_template('showpost.html',post=post)
 
 @main.route('/delete/post/<post_id>')
+@login_required
 def delete_post(post_id):
     post = Post.query.filter_by(id=post_id).first()
 

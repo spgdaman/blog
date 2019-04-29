@@ -2,6 +2,7 @@
 
 {% block content %}
     <div class="container">
+        <a class="btn btn-lg btn-primary" href="{{ url_for('main.add_new') }}">Add New Post</a>
         {% for post in all_posts %}
             <div class="row">
                 <div class="card col-md-6 col-lg-12">
