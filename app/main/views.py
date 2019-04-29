@@ -46,7 +46,7 @@ def add_new():
         db.session.add(post)
         db.session.commit()
 
-        return redirect(url_for('main.show_all_posts',post_id=post.id))
+        return redirect(url_for('main.get_post',post_id=post.id))
 
     return render_template('newpost.html',newpost_form=newpost_form)
 

@@ -6,12 +6,9 @@
             <div class="row">
                 <div class="card col-md-6 col-lg-12">
                     <div class="card-body">
+                        <p class="card-text"><a href="{{ url_for('main.get_post', post_id=post.id ) }}">{{post.title}}</a></p>
                         <p class="card-text">{{ post.post_content }}</p>
-                        <p class="card-text">{{post.title}}</p>
                         <small>{{ post.post_date }}</small>
-                        <div class="row">
-                            <button class="btn btn-danger">delete</button>
-                        </div>
                     </div>
                 </div>
             </div>
