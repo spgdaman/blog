@@ -50,6 +50,7 @@ class Post(db.Model):
     __tablename__ = 'posts'
 
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(64))
     post_content = db.Column(db.String())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_date = db.Column(db.DateTime)

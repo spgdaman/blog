@@ -16,5 +16,6 @@ class SignupForm(FlaskForm):
     submit = SubmitField('Sign up')
 
 class NewpostForm(FlaskForm):
+    title = StringField(validators=[DataRequired()])
     content = StringField(validators=[DataRequired()])
     post = SubmitField('post')

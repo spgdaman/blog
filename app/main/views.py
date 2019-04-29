@@ -42,7 +42,7 @@ def add_new():
 
     if newpost_form.validate_on_submit():
 
-        post = Post(post_content=newpost_form.content.data,post_date=timestamp)
+        post = Post(title=newpost_form.title.data ,post_content=newpost_form.content.data,post_date=timestamp)
         db.session.add(post)
         db.session.commit()
 
