@@ -2,7 +2,7 @@ from flask import render_template, flash, abort, request, url_for, redirect
 from ..requests import get_random_quote
 from . import main
 from .forms import SignupForm, NewpostForm, UpdateBioForm, CommentForm
-from ..models import User,Post
+from ..models import User,Post, Comment
 from .. import db, photos
 import datetime
 from flask_login import login_required
@@ -56,9 +56,12 @@ def add_new():
 @main.route('/posts/<post_id>')
 def get_post(post_id):
     post = Post.query.filter_by(id=post_id).first()
-    
+    comment = Comment()
+    form = CommentForm
+    if form.validate_on_submit():
+        
 
-    return render_template('showpost.html',post=post)
+    return render_template('showpost.html',post=post,form=form)
 
 @main.route('/delete/post/<post_id>')
 @login_required
