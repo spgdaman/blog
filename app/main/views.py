@@ -6,6 +6,7 @@ from ..models import User,Post
 from .. import db
 import datetime
 from flask_login import login_required
+from werkzeug.security import generate_password_hash
 
 @main.route('/')
 def index():
@@ -22,7 +23,7 @@ def signup():
 
     if form.validate_on_submit():
         user = User(firstname = form.firstname.data, lastname=form.lastname.data,
-        username=form.username.data, email=form.email.data, pass_hash=form.password.data)
+        username=form.username.data, email=form.email.data, pass_hash=generate_password_hash(form.password.data))
 
         db.session.add(user)
         db.session.commit()
@@ -68,6 +69,7 @@ def delete_post(post_id):
         db.session.commit()
         return redirect(url_for('main.show_all_posts'))
     return None
+
 
 
 
