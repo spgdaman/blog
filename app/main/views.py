@@ -70,8 +70,14 @@ def delete_post(post_id):
         return redirect(url_for('main.show_all_posts'))
     return None
 
+# @main.route('/add/<post_id>/new_comment')
+# def new_comment(post_id):
+#     pass
 
-
+@main.route('/profile/<user_id>')
+def show_profile(user_id):
+    user=User.query.filter_by(id=user_id).first()
+    return render_template('profile.html',user=user)
 
 
 

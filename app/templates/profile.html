@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <center>
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="/app/static/{{user.prof_pic}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{ user.username }}</h5>
+                <p class="card-text">{{ user.bio }}</p>
+                <a href="#" class="btn btn-primary">Update profile</a>
+            </div>
+        </div>
+    </center>
+{% endblock %}
