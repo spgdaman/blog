@@ -1,9 +1,9 @@
 from flask import render_template, flash, abort, request, url_for, redirect
 from ..requests import get_random_quote
 from . import main
-from .forms import SignupForm, NewpostForm
+from .forms import SignupForm, NewpostForm, UpdateBioForm, CommentForm
 from ..models import User,Post
-from .. import db
+from .. import db, photos
 import datetime
 from flask_login import login_required
 from werkzeug.security import generate_password_hash
@@ -56,6 +56,7 @@ def add_new():
 @main.route('/posts/<post_id>')
 def get_post(post_id):
     post = Post.query.filter_by(id=post_id).first()
+    
 
     return render_template('showpost.html',post=post)
 
@@ -75,11 +76,36 @@ def delete_post(post_id):
 #     pass
 
 @main.route('/profile/<user_id>')
+@login_required
 def show_profile(user_id):
     user=User.query.filter_by(id=user_id).first()
     return render_template('profile.html',user=user)
 
+@main.route('/profile/<username>/update/prof_pic', methods=["POST"])
+@login_required
+def update_pic(username):
+    user = User.query.filter_by(username=username).first()
 
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        user.prof_pic = path
+        db.session.commit()
+        return redirect(url_for('main.show_profile',user_id=user.id))
+    return render_template('updateprofile.html')
+
+@main.route('/profile/<username>/update/bio', methods=["GET","POST"])
+@login_required
+def update_bio(username):
+    form = UpdateBioForm()
+    user = User.query.filter_by(username=username).first()
+
+    if form.validate_on_submit():
+        user.bio = form.bio.data
+
+        db.session.commit()
+        return redirect(url_for('main.show_profile',user_id=user.id))
+    return render_template('updateprofile.html', form=form)
 
 
 

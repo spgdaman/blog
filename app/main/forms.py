@@ -19,3 +19,11 @@ class NewpostForm(FlaskForm):
     title = StringField(validators=[DataRequired()])
     content = StringField(validators=[DataRequired()])
     post = SubmitField('post')
+
+class UpdateBioForm(FlaskForm):
+    bio = StringField('Add Bio ?')
+    submit = SubmitField('Update Bio')
+
+class CommentForm(FlaskForm):
+    comment = StringField('Comment ?')
+    submit = SubmitField('Submit')

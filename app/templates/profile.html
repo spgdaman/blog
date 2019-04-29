@@ -1,13 +1,31 @@
 {% extends 'base.html' %}
 
+{% import 'bootstrap/wtf.html' as wtf%}
+
 {% block content %}
     <center>
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="/app/static/{{user.prof_pic}}" alt="Card image cap">
+            {% if user.prof_pic %}
+            <img class="card-img-top" src="{{ url_for('static', filename=user.prof_pic) }}" alt="profile-pic">
+            {% else %}
+            <p>No profile picture</p>
+            {% endif %}
             <div class="card-body">
                 <h5 class="card-title">{{ user.username }}</h5>
                 <p class="card-text">{{ user.bio }}</p>
-                <a href="#" class="btn btn-primary">Update profile</a>
+
+                
+
+                {% if user == current_user %}
+                <form action="{{ url_for('main.update_pic', username=user.username) }}" method="POST" enctype="multipart/form-data">
+                    <div class="custom-file">
+                            <label class="custom-file-label" for="inputGroupFile01">Upload Pic</label>
+                        <input type="file" name="photo" class="custom-file-input" id="inputGroupFile01" required>
+                    </div>
+                    <input class="btn btn-primary" type="submit">
+                </form>
+                {% endif %}
+                <a class="btn btn-primary" href="{{ url_for('main.update_bio',username=user.username) }}">Update Bio</a>
             </div>
         </div>
     </center>
