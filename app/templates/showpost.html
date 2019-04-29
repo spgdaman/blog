@@ -1,20 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>I display individual posts</h1>
+
 <div class="container">
+    <h1>My blog posts</h1>
     <div class="row">
         <div class="card col-md-6 col-lg-12">
             <div class="card-body">
                 <p class="card-text">{{post.title}}</p>
                 <p class="card-text">{{ post.post_content }}</p>
                 <small>{{ post.post_date }}</small>
-                <div class="row">
-                    <button class="btn btn-danger">delete</button>
+                <div class="container">
+                    <div class="row">
+                        <a class="btn btn-danger" href="{{url_for('main.delete_post', post_id=post.id)}}">delete</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    
 </div>
 
 {% endblock %}

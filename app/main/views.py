@@ -53,7 +53,18 @@ def add_new():
 @main.route('/posts/<post_id>')
 def get_post(post_id):
     post = Post.query.filter_by(id=post_id).first()
+
     return render_template('showpost.html',post=post)
+
+@main.route('/delete/post/<post_id>')
+def delete_post(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+
+    if post.post_content is not None:
+        db.session.delete(post)
+        db.session.commit()
+        return redirect(url_for('main.show_all_posts'))
+    return None
 
 
 
