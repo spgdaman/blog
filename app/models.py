@@ -68,3 +68,7 @@ class Comment(db.Model):
     comment_date = db.Column(db.DateTime)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()

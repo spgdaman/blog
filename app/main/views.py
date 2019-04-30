@@ -7,6 +7,7 @@ from .. import db, photos
 import datetime
 from flask_login import login_required
 from werkzeug.security import generate_password_hash
+from ..email import mail_message
 
 @main.route('/')
 def index():
@@ -27,6 +28,9 @@ def signup():
 
         db.session.add(user)
         db.session.commit()
+
+        mail_message("Welcome to my blog", "welcome_user",user.email,user=user)
+
         return redirect(url_for('auth.login'))
 
     return render_template('signup.html', form=form)
@@ -53,15 +57,37 @@ def add_new():
 
     return render_template('newpost.html',newpost_form=newpost_form)
 
-@main.route('/posts/<post_id>')
+@main.route('/posts/<post_id>', methods=["GET","POST"])
 def get_post(post_id):
     post = Post.query.filter_by(id=post_id).first()
-    comment = Comment()
-    form = CommentForm
-    if form.validate_on_submit():
-        
+    comments = Comment.query.all()
 
-    return render_template('showpost.html',post=post,form=form)
+    post_content = []
+
+    for comment in comments:
+        if comment.post_id == post_id:
+            date = comment.comment_date
+            content = comment.comment_content
+            post_content.push({"date":date, "content":content})
+            return redirect(url_for('main.get_post',post_id=post_id,post_content=post_content))
+
+    return render_template('showpost.html',post=post,comments=comments)
+
+@main.route('/add/<post_id>/new_comment', methods=["GET","POST"])
+def new_comment(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    form = CommentForm()
+
+    if form.validate_on_submit():
+        timestamp = datetime.datetime.now().strftime("%d-%m-%y %H:%M")
+        comment = Comment(comment_content=form.comment.data,comment_date=timestamp)  
+        comment.post_id = post_id
+        comment.save_comment()
+        return redirect(url_for('main.get_post',post_id=post_id))
+
+    return render_template('comments.html',form=form)
+
+
 
 @main.route('/delete/post/<post_id>')
 @login_required
@@ -73,10 +99,6 @@ def delete_post(post_id):
         db.session.commit()
         return redirect(url_for('main.show_all_posts'))
     return None
-
-# @main.route('/add/<post_id>/new_comment')
-# def new_comment(post_id):
-#     pass
 
 @main.route('/profile/<user_id>')
 @login_required
