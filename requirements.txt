@@ -41,7 +41,7 @@ Jinja2==2.10.1
 jinja2-markdown==0.0.3
 keyring==10.6.0
 keyrings.alt==3.0
-lxml==4.2.1
+lxml==4.6.2
 Mako==1.0.9
 Markdown==3.0.1
 markdown2==2.3.6
