@@ -55,7 +55,7 @@ pluggy==0.6.0
 psycopg2==2.8.2
 py==1.5.2
 pycrypto==2.6.1
-Pygments==2.2.0
+Pygments==2.7.4
 pygobject==3.26.1
 PyJWT==1.4.2
 pyOpenSSL==17.5.0
