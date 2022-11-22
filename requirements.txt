@@ -50,7 +50,7 @@ mechanize==0.2.5
 msgpack==0.5.6
 netifaces==0.10.4
 olefile==0.45.1
-Pillow==5.1.0
+Pillow==9.3.0
 pluggy==0.6.0
 psycopg2==2.8.2
 py==1.5.2
